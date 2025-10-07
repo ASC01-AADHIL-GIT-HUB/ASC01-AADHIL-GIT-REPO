@@ -1,161 +1,166 @@
-// File: Movie.java
+// File: Flick.java
 package movies;
 
-public class Movie {
+public class Flick {
 
     // Attributes
-    private String movieName;
-    private String producedBy;
-    private String directedBy;
+    private String name;
+    private String producer;
+    private String director;
     private int duration; // in minutes
     private int year;
-    private String category;
+    private String genre;
 
     // Static variable
-    private static int moviesCount = 0;
+    private static int totalFlicks = 0;
 
     // Read-only field
-    private final String movieId;
+    private final String flickId;
 
     // Mandatory-fields constructor
-    public Movie(String movieName, String producedBy) {
-        if (movieName == null || producedBy == null) {
-            throw new IllegalArgumentException("movieName and producedBy are mandatory!");
+    public Flick(String name, String producer) {
+        if (name == null || producer == null) {
+            throw new IllegalArgumentException("Name and producer are required!");
         }
-        this.movieName = movieName;
-        this.producedBy = producedBy;
+        this.name = name;
+        this.producer = producer;
 
-        moviesCount++;
-        this.movieId = this.movieName + "_" + moviesCount;
+        totalFlicks++;
+        this.flickId = this.name + "_" + totalFlicks;
     }
 
     // Constructor with all attributes
-    public Movie(String movieName, String producedBy, String directedBy, int duration, int year, String category) {
-        this(movieName, producedBy); // calls mandatory-fields constructor
-        this.directedBy = directedBy;
+    public Flick(String name, String producer, String director, int duration, int year, String genre) {
+        this(name, producer); // call mandatory-fields constructor
+        this.director = director;
         this.duration = duration;
         this.year = year;
-        this.category = category;
+        this.genre = genre;
     }
 
     // Getters
-    public String getMovieId() {
-        return movieId;
+    public String getFlickId() {
+        return flickId;
     }
 
-    public static int getMoviesCount() {
-        return moviesCount;
+    public static int getTotalFlicks() {
+        return totalFlicks;
     }
 
     // Method to show details
-    public String showDetails() {
-        return "Movie ID: " + movieId + ", Name: " + movieName + ", Produced By: " + producedBy
-                + ", Directed By: " + directedBy + ", Duration: " + duration + " mins, Year: " + year
-                + ", Category: " + category;
-    }
-
-
-
-  ////////////////////////////////////////////////////////
-
-
-// File: SpecialMovie.java
-package movies;
-
-public class SpecialMovie extends Movie {
-
-    private String soundEffectsTechnology;
-    private String visualEffectsTechnology;
-
-    // Constructor
-    public SpecialMovie(String movieName, String producedBy, String soundEffectsTechnology, String visualEffectsTechnology) {
-        super(movieName, producedBy); // call parent constructor
-        this.soundEffectsTechnology = soundEffectsTechnology;
-        this.visualEffectsTechnology = visualEffectsTechnology;
-    }
-
-    public SpecialMovie(String movieName, String producedBy, String directedBy, int duration, int year, String category,
-                        String soundEffectsTechnology, String visualEffectsTechnology) {
-        super(movieName, producedBy, directedBy, duration, year, category);
-        this.soundEffectsTechnology = soundEffectsTechnology;
-        this.visualEffectsTechnology = visualEffectsTechnology;
-    }
-
-    public String showDetails() {
-        return super.showDetails() + ", Sound Effects: " + soundEffectsTechnology
-                + ", Visual Effects: " + visualEffectsTechnology;
+    public String showInfo() {
+        return "Flick ID: " + flickId + ", Name: " + name + ", Producer: " + producer
+                + ", Director: " + director + ", Duration: " + duration + " mins, Year: " + year
+                + ", Genre: " + genre;
     }
 }
 
 
-///////////////////////////////////////////////
+
+
+//////////////////////////////////////////////
 
 
 
-// File: InternationalMovie.java
+
+// File: SpecialFlick.java
 package movies;
 
-public class InternationalMovie extends Movie {
+public class SpecialFlick extends Flick {
+
+    private String soundTech;
+    private String visualTech;
+
+    // Constructor
+    public SpecialFlick(String name, String producer, String soundTech, String visualTech) {
+        super(name, producer); // call parent constructor
+        this.soundTech = soundTech;
+        this.visualTech = visualTech;
+    }
+
+    public SpecialFlick(String name, String producer, String director, int duration, int year, String genre,
+                        String soundTech, String visualTech) {
+        super(name, producer, director, duration, year, genre);
+        this.soundTech = soundTech;
+        this.visualTech = visualTech;
+    }
+
+    @Override
+    public String showInfo() {
+        return super.showInfo() + ", Sound Tech: " + soundTech + ", Visual Tech: " + visualTech;
+    }
+}
+
+
+
+///////////////////////////////////////////////////////////////////
+
+
+
+
+// File: GlobalFlick.java
+package movies;
+
+public class GlobalFlick extends Flick {
 
     private String country;
     private String language;
 
     // Constructor
-    public InternationalMovie(String movieName, String producedBy, String country, String language) {
-        super(movieName, producedBy);
+    public GlobalFlick(String name, String producer, String country, String language) {
+        super(name, producer);
         this.country = country;
         this.language = language;
     }
 
-    public InternationalMovie(String movieName, String producedBy, String directedBy, int duration, int year, String category,
-                              String country, String language) {
-        super(movieName, producedBy, directedBy, duration, year, category);
+    public GlobalFlick(String name, String producer, String director, int duration, int year, String genre,
+                       String country, String language) {
+        super(name, producer, director, duration, year, genre);
         this.country = country;
         this.language = language;
     }
 
-    public String showDetails() {
-        return super.showDetails() + ", Country: " + country + ", Language: " + language;
+    @Override
+    public String showInfo() {
+        return super.showInfo() + ", Country: " + country + ", Language: " + language;
     }
 }
 
 
-  
-}
+
+//////////////////////////////////////////////////////////////
 
 
 
-///////////////////////////////////////////////////
 
 
-
-// File: Main.java
+// File: MainFlicks.java
 package movies;
 
-public class Main {
+public class MainFlicks {
     public static void main(String[] args) {
 
-        // Basic Movie
-        Movie m1 = new Movie("Hello", "XYZ Productions");
-        System.out.println(m1.getMovieId()); // Hello_1
-        System.out.println(m1.showDetails());
+        // Basic Flick
+        Flick f1 = new Flick("ChillVibes", "Happy Studio");
+        System.out.println(f1.getFlickId()); // ChillVibes_1
+        System.out.println(f1.showInfo());
 
-        // Movie with all attributes
-        Movie m2 = new Movie("AdventureTime", "ABC Studios", "John Doe", 120, 2025, "Action");
-        System.out.println(m2.getMovieId()); // AdventureTime_2
-        System.out.println(m2.showDetails());
+        // Flick with all attributes
+        Flick f2 = new Flick("AdventureRush", "Epic Films", "Jane Doe", 130, 2025, "Action");
+        System.out.println(f2.getFlickId()); // AdventureRush_2
+        System.out.println(f2.showInfo());
 
-        // Special Movie
-        SpecialMovie sm = new SpecialMovie("EpicSound", "Mega Studios", "Dolby Atmos", "CGI 4K");
-        System.out.println(sm.getMovieId()); // EpicSound_3
-        System.out.println(sm.showDetails());
+        // Special Flick
+        SpecialFlick sf = new SpecialFlick("SoundBlaster", "Mega Studio", "Dolby Atmos", "CGI 4K");
+        System.out.println(sf.getFlickId()); // SoundBlaster_3
+        System.out.println(sf.showInfo());
 
-        // International Movie
-        InternationalMovie im = new InternationalMovie("GlobalHit", "World Productions", "USA", "English");
-        System.out.println(im.getMovieId()); // GlobalHit_4
-        System.out.println(im.showDetails());
+        // Global Flick
+        GlobalFlick gf = new GlobalFlick("WorldTour", "Global Studio", "USA", "English");
+        System.out.println(gf.getFlickId()); // WorldTour_4
+        System.out.println(gf.showInfo());
 
         // Static variable test
-        System.out.println("Total movies created: " + Movie.getMoviesCount());
+        System.out.println("Total flicks created: " + Flick.getTotalFlicks());
     }
 }
